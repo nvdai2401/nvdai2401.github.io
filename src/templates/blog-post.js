@@ -2,7 +2,6 @@ import React from 'react'
 import { Link, graphql } from 'gatsby'
 import get from 'lodash/get'
 
-import '../fonts/fonts-post.css'
 import Bio from '../components/Bio'
 import Layout from '../components/Layout'
 import SEO from '../components/SEO'
@@ -13,7 +12,6 @@ import { rhythm, scale } from '../utils/typography'
 import {
   codeToLanguage,
   createLanguageLink,
-  loadFontsForCode,
   replaceAnchorLinksByLanguage,
 } from '../utils/i18n'
 
@@ -102,8 +100,7 @@ class BlogPostTemplate extends React.Component {
       translations,
       translatedLinks,
     } = this.props.pageContext
-    const lang = post.fields.langKey
-
+    const lang = 'vi'
     // Replace original links with translated when available.
     let html = post.html
 
@@ -128,7 +125,7 @@ class BlogPostTemplate extends React.Component {
       return codeToLanguage(a) < codeToLanguage(b) ? -1 : 1
     })
 
-    loadFontsForCode(lang)
+    // loadFontsForCode(lang)
     // TODO: this curried function is annoying
     const languageLink = createLanguageLink(slug, lang)
     const enSlug = languageLink('en')
@@ -177,9 +174,9 @@ class BlogPostTemplate extends React.Component {
             <div dangerouslySetInnerHTML={{ __html: html }} />
             <footer>
               <p>
-                <a href={discussUrl} target="_blank" rel="noopener noreferrer">
-                  Discuss on Twitter
-                </a>
+                {/* <a href={discussUrl} target="_blank" rel="noopener noreferrer">
+                  Thảo luận trên Facebook
+                </a> */}
                 {/* {` • `}
                 <a href={editUrl} target="_blank" rel="noopener noreferrer">
                   Edit on GitHub
@@ -199,7 +196,6 @@ class BlogPostTemplate extends React.Component {
           </div> */}
           <h3
             style={{
-              fontFamily: 'Montserrat, sans-serif',
               marginTop: rhythm(0.25),
             }}
           >

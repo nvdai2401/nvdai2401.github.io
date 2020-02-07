@@ -1,7 +1,7 @@
 ---
-title: Lorem Ipsum
+title: Tôi sẽ đọc ít nhất 30 cuốn sách trong năm 2020, còn bạn?
 date: '2020-02-06'
-spoiler: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...
+spoiler: Tôi sẽ đọc ít nhất 30 cuốn sách trong năm 2020, còn bạn?
 cta: 'lorem ipsum'
 ---
 
