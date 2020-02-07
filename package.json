@@ -60,11 +60,10 @@
     "lint": "./node_modules/.bin/eslint --ext .js,.jsx --ignore-pattern public .",
     "format": "prettier --write '{gatsby-*.js,src/**/*.{js,jsx,json,css}}'",
     "build": "gatsby build",
-    "now-build": "gatsby build",
     "deploy": "yarn build && cp now.json public/ && cd public && now alias $(now) overreacted.io",
     "dry": "yarn build && cp now.json public/ && cd public && now",
     "js-to-jsx": "node src/utils/js-to-jsx",
-    "deploy-ghp": "yarn now-build && gh-pages -d public"
+    "deploy-ghp": "yarn build && cp now.json public/ && cd public && gh-pages -d public -b master"
   },
   "husky": {
     "hooks": {
