@@ -1,4 +1,4 @@
-export function formatReadingTime(minutes) {
+function formatReadingTime(minutes) {
   let cups = Math.round(minutes / 5)
   let bowls = 0
   if (cups > 5) {
@@ -11,7 +11,7 @@ export function formatReadingTime(minutes) {
 }
 
 // `lang` is optional and will default to the current user agent locale
-export function formatPostDate(date, lang) {
+function formatPostDate(date, lang) {
   if (typeof Date.prototype.toLocaleDateString !== 'function') {
     return date
   }
@@ -22,4 +22,29 @@ export function formatPostDate(date, lang) {
     { day: 'numeric', month: 'long', year: 'numeric' },
   ].filter(Boolean)
   return date.toLocaleDateString(...args)
+}
+
+const isAlphabetNum = s =>
+  /[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g.test(s)
+
+function kebabCase(s) {
+  if (isAlphabetNum(s)) {
+    return s
+      .match(
+        /[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g
+      )
+      .map(x => x.toLowerCase())
+      .join('-')
+  }
+
+  return s
+    .replace(/([a-z])([A-Z])/g, '$1-$2')
+    .replace(/[\s_]+/g, '-')
+    .toLowerCase()
+}
+
+module.exports = {
+  formatReadingTime,
+  kebabCase,
+  formatPostDate,
 }

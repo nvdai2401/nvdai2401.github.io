@@ -92,6 +92,7 @@ class Translations extends React.Component {
 class BlogPostTemplate extends React.Component {
   render() {
     const post = this.props.data.markdownRemark
+    debugger
     const siteTitle = get(this.props, 'data.site.siteMetadata.title')
     let {
       previous,

@@ -1,36 +1,21 @@
 const _ = require('lodash')
 const Promise = require('bluebird')
 const path = require('path')
+const R = require('ramda')
+const { kebabCase } = require('./src/utils/helpers')
 const { createFilePath } = require('gatsby-source-filesystem')
 const { supportedLanguages } = require('./i18n')
+
+// group by language
+const byLangKey = R.groupBy(R.path(['node', 'fields', 'langKey']))
 
 exports.createPages = ({ graphql, actions }) => {
   const { createPage, createRedirect } = actions
 
-  // Oops
-  createRedirect({
-    fromPath: '/zh_TW/things-i-dont-know-as-of-2018/',
-    toPath: '/zh-hant/things-i-dont-know-as-of-2018/',
-    isPermanent: true,
-    redirectInBrowser: true,
-  })
-  // Oops 2
-  createRedirect({
-    fromPath: '/not-everything-should-be-a-hook/',
-    toPath: '/why-isnt-x-a-hook/',
-    isPermanent: true,
-    redirectInBrowser: true,
-  })
-  // Oops 3
-  createRedirect({
-    fromPath: '/making-setinterval-play-well-with-react-hooks/',
-    toPath: '/making-setinterval-declarative-with-react-hooks/',
-    isPermanent: true,
-    redirectInBrowser: true,
-  })
-
   return new Promise((resolve, reject) => {
     const blogPost = path.resolve('./src/templates/blog-post.js')
+    const tagsTotal = path.resolve('src/templates/tags.js')
+    const TagPageTemplate = path.resolve('./src/templates/tag-page.js')
 
     // Create index pages for all supported languages
     Object.keys(supportedLanguages).forEach(langKey => {
@@ -61,6 +46,7 @@ exports.createPages = ({ graphql, actions }) => {
                   }
                   frontmatter {
                     title
+                    tags
                   }
                 }
               }
@@ -76,6 +62,8 @@ exports.createPages = ({ graphql, actions }) => {
 
         // Create blog posts pages.
         const posts = result.data.allMarkdownRemark.edges
+        // const tags = result.data.tagsGroup.group
+
         const allSlugs = _.reduce(
           posts,
           (result, post) => {
@@ -164,6 +152,41 @@ exports.createPages = ({ graphql, actions }) => {
                 slug: post.node.fields.slug,
                 translations,
                 translatedLinks,
+              },
+            })
+          })
+        })
+        const postsGroupByLang = byLangKey(posts)
+        Object.keys(postsGroupByLang).forEach(langKey => {
+          // Make tags-total
+          createPage({
+            path: `/tags/`,
+            component: tagsTotal,
+            context: {
+              langKey,
+            },
+          })
+        })
+
+        Object.keys(postsGroupByLang).forEach(langKey => {
+          // Tag pages:
+          let tags = []
+          postsGroupByLang[langKey].forEach(post => {
+            if (R.path(['node', 'frontmatter', 'tags'], post)) {
+              tags = tags.concat(post.node.frontmatter.tags)
+            }
+          })
+          // Eliminate duplicate tags
+          tags = R.uniq(tags)
+
+          // Make tag pages
+          tags.forEach(tag => {
+            createPage({
+              path: `/tags/${kebabCase(tag)}/`,
+              component: TagPageTemplate,
+              context: {
+                tag,
+                langKey,
               },
             })
           })
