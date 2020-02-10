@@ -92,7 +92,6 @@ class Translations extends React.Component {
 class BlogPostTemplate extends React.Component {
   render() {
     const post = this.props.data.markdownRemark
-    debugger
     const siteTitle = get(this.props, 'data.site.siteMetadata.title')
     let {
       previous,
@@ -267,6 +266,7 @@ export const pageQuery = graphql`
         date(formatString: "MMMM DD, YYYY")
         spoiler
         cta
+        tags
       }
       fields {
         slug

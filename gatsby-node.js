@@ -15,7 +15,7 @@ exports.createPages = ({ graphql, actions }) => {
   return new Promise((resolve, reject) => {
     const blogPost = path.resolve('./src/templates/blog-post.js')
     const tagsTotal = path.resolve('src/templates/tags.js')
-    const TagPageTemplate = path.resolve('./src/templates/tag-page.js')
+    const TagPageTemplate = path.resolve('./src/templates/tags-page.js')
 
     // Create index pages for all supported languages
     Object.keys(supportedLanguages).forEach(langKey => {

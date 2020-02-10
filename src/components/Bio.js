@@ -23,9 +23,9 @@ class Bio extends React.Component {
           }}
         />
         <p style={{ maxWidth: 310 }}>
-          Personal blog by{' '}
+          Blog cá nhân của{' '}
           <a href="https://mobile.twitter.com/nvdai2401">Michael</a>.<br />
-          Life & Tech.
+          Học hỏi, trải nghiệm và chia sẻ.
         </p>
       </div>
     )

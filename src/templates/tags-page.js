@@ -5,20 +5,18 @@ import PropTypes from 'prop-types'
 // Components
 import { graphql } from 'gatsby'
 
-import Layout from 'components/Layout'
-import SEO from 'components/SEO'
-import PostAbbrev from 'components/PostAbbrev'
-import Bio from 'components/Bio'
-import { useLang } from 'context/LanguageContext'
-import { formatMessage } from 'utils/i18n'
+import Layout from '../components/Layout'
+import SEO from '../components/SEO'
+import PostAbbrev from '../components/PostAbbrev'
+import Bio from '../components/Bio'
+import { useLang } from '../context/LanguageContext'
+import { formatMessage } from '../utils/i18n'
 
 const TagPageTemplate = ({ pageContext, data, location }) => {
   const { tag } = pageContext
   const { edges, totalCount } = data.allMarkdownRemark
   const siteTitle = data.site.siteMetadata.title
-
   const { lang, homeLink } = useLang()
-
   const tagHeader = formatMessage('tfTagHeader', totalCount, tag)
 
   return (
@@ -44,6 +42,8 @@ const TagPageTemplate = ({ pageContext, data, location }) => {
               date={node.frontmatter.date}
               timeToRead={node.timeToRead}
               title={title}
+              spoiler={node.frontmatter.spoiler || node.excerpt}
+              tags={node.frontmatter.tags}
             />
           )
         })}
@@ -109,6 +109,8 @@ export const pageQuery = graphql`
           frontmatter {
             title
             date(formatString: "MMMM DD, YYYY")
+            spoiler
+            tags
           }
         }
       }

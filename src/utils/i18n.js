@@ -1,5 +1,7 @@
 import { supportedLanguages } from './../../i18n'
 import whitelist from './whitelist'
+import { useLang } from '../context/LanguageContext'
+import { formatPostDate } from './helpers'
 
 // This is kind of a mess for some languages.
 // Try to be as short as possible.
@@ -89,4 +91,28 @@ export const replaceAnchorLinksByLanguage = (html, code) => {
   })
 
   return html
+}
+
+export const formatMessage = (msgId, ...args) => {
+  const { lang, messages } = useLang()
+
+  const msg = messages[msgId]
+
+  if (msg == null) {
+    console.error(`MessageId [${msgId}] is not exist!!
+    You should add it to config/locales/${lang}.js`)
+    return msgId
+  }
+
+  if (typeof msg === 'function') {
+    return msg(...args)
+  }
+
+  return msg
+}
+
+export const formatDate = dateStr => {
+  const { lang } = useLang()
+
+  return formatPostDate(dateStr, lang)
 }

@@ -3,19 +3,19 @@ import PropTypes from 'prop-types'
 
 import { Link } from 'gatsby'
 
-import { rhythm } from 'utils/typography'
-// import { formatReadingTime } from '../utils/helpers'
-import { formatDate } from 'utils/i18n'
+import { rhythm } from '../utils/typography'
+import { formatReadingTime } from '../utils/helpers'
+import { formatDate } from '../utils/i18n'
 
-import TagList from '../TagList'
+import TagList from './TagList'
 
-function PostAbbrev({ slug, title, date, timeToRead, excerpt, tags, base }) {
-  let excerptPart
-  if (excerpt) {
-    excerptPart = (
+function PostAbbrev({ slug, title, date, timeToRead, spoiler, tags, base }) {
+  let spoilerPart
+  if (spoiler) {
+    spoilerPart = (
       <p
         dangerouslySetInnerHTML={{
-          __html: excerpt,
+          __html: spoiler,
         }}
       />
     )
@@ -23,13 +23,7 @@ function PostAbbrev({ slug, title, date, timeToRead, excerpt, tags, base }) {
 
   let tagsPart
   if (tags) {
-    tagsPart = (
-      <TagList
-        style={{ margin: '0.5rem 0 -0.5rem -0.5rem' }}
-        tags={tags}
-        baseUrl={`${base}tags`}
-      />
-    )
+    tagsPart = <TagList tags={tags} baseUrl={`${base}tags`} />
   }
 
   return (
@@ -46,11 +40,12 @@ function PostAbbrev({ slug, title, date, timeToRead, excerpt, tags, base }) {
             {title}
           </Link>
         </h3>
+
+        <small>{`${formatDate(date)} • ${formatReadingTime(
+          timeToRead
+        )}`}</small>
         {tagsPart}
-        {/* <small>{`${formatDate(date)} • ${formatReadingTime(
-					timeToRead
-				)}`}</small> */}
-        {excerptPart}
+        {spoilerPart}
       </header>
     </article>
   )
@@ -61,14 +56,14 @@ PostAbbrev.propTypes = {
   title: PropTypes.string,
   date: PropTypes.string.isRequired,
   timeToRead: PropTypes.number.isRequired,
-  excerpt: PropTypes.string,
+  spoiler: PropTypes.string,
   tags: PropTypes.array,
   base: PropTypes.string,
 }
 
 PostAbbrev.defaultProps = {
   title: null,
-  excerpt: null,
+  spoiler: null,
   tags: null,
   base: '',
 }

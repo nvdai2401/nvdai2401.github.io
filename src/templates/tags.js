@@ -2,17 +2,17 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 // Utilities
-import { kebabCase } from 'utils/helpers'
+import { kebabCase } from '../utils/helpers'
 
 // Components
 import { Helmet } from 'react-helmet'
 import { graphql } from 'gatsby'
 
-import Layout from 'components/Layout'
-import Tag from 'components/Tag'
-import Bio from 'components/Bio'
-import { useLang } from 'context/LanguageContext'
-import { formatMessage } from 'utils/i18n'
+import Layout from '../components/Layout'
+import Tag from '../components/Tag'
+import Bio from '../components/Bio'
+import { useLang } from '../context/LanguageContext'
+import { formatMessage } from '../utils/i18n'
 
 const styles = {
   tagListDiv: {
@@ -83,7 +83,6 @@ export const pageQuery = graphql`
     site {
       siteMetadata {
         title
-        lang
       }
     }
     allMarkdownRemark(
