@@ -6,16 +6,12 @@ cta: 'book'
 tags: ["books", "goals", "plan"]
 ---
 
-🤔What is Lorem Ipsum [this](/started-my-blog/) 
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+🤔What is Lorem Ipsum [this](/started-my-blog/)
+Bố cục:
 
-Why do we use it?
-It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+- Lý do viết blog
+- Nguyên nhân quyết định đọc sách, đặt ra mục tiêu, actions, plan
+- Phân loại sách và số lượng sách
+- Kết luận: sẽ có nhiều thử thách
 
-Why do we use it?
-It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-
-Why do we use it?
-It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-
-
+Đầu tiên, mình xin cảm ơn và chào mừng bạn vì bạn là một trong những người đầu tiên lướt qua và xem blog cá nhân của mình. Mục đích của mình khi lập ra blog này là để note lại những kiến thức và trải nghiệm của mình trong cuộc sống và công việc. Đồng thời mình cũng muốn chia sẻ những kinh nghiệm, trải nghiệm của mình đến với mọi người vì mình nghĩ nó sẽ có ích cho những người cần. Đồng thời, mình cũng rất muốn nghe trải nghiệm của mọi người nên hãy cùng chia sẻ với mình nhé.
