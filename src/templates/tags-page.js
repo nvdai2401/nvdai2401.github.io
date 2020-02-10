@@ -11,6 +11,7 @@ import PostAbbrev from '../components/PostAbbrev'
 import Bio from '../components/Bio'
 import { useLang } from '../context/LanguageContext'
 import { formatMessage } from '../utils/i18n'
+import { rhythm } from '../utils/typography'
 
 const TagPageTemplate = ({ pageContext, data, location }) => {
   const { tag } = pageContext
@@ -29,7 +30,13 @@ const TagPageTemplate = ({ pageContext, data, location }) => {
       ]}
     >
       <SEO title={tagHeader} description={tagHeader} />
-      <h3>{tagHeader}</h3>
+      <h3
+        style={{
+          marginBottom: rhythm(1),
+        }}
+      >
+        {tagHeader}
+      </h3>
       <main>
         {edges.map(({ node }) => {
           const title = node.frontmatter.title || node.fields.slug

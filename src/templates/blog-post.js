@@ -150,7 +150,9 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
       <main>
         <article>
           <header style={{ marginBottom: rhythm(1) }}>
-            <h1 style={{ color: 'var(--textTitle)' }}>
+            <h1
+              style={{ color: 'var(--textTitle)', marginBottom: rhythm(1.2) }}
+            >
               {post.frontmatter.title}
             </h1>
             <p
@@ -200,6 +202,7 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
         <h3
           style={{
             marginTop: rhythm(0.25),
+            marginBottom: rhythm(0.5),
           }}
         >
           <Link
@@ -210,7 +213,7 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
             }}
             to={'/'}
           >
-            FIREman
+            FIREMan
           </Link>
         </h3>
         <Bio />

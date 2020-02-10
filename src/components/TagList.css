@@ -2,3 +2,9 @@ ul li {
   display: inline-block;
   margin-bottom: 0;
 }
+
+@media only screen and (max-width: 768px) {
+  .tag-ul {
+    margin-left: 0;
+  }
+}
