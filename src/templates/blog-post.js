@@ -149,7 +149,7 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
       />
       <main>
         <article>
-          <header style={{ marginBottom: rhythm(2) }}>
+          <header style={{ marginBottom: rhythm(1) }}>
             <h1 style={{ color: 'var(--textTitle)' }}>
               {post.frontmatter.title}
             </h1>
