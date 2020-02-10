@@ -1,26 +1,36 @@
 import React from 'react'
-import Layout from '../components/Layout'
+import PropTypes from 'prop-types'
+import { graphql } from 'gatsby'
 
-class NotFoundPage extends React.Component {
-  render() {
-    return (
-      <Layout location={this.props.location}>
-        <main>
-          <h1>Not Found</h1>
-          <p>I haven’t written this post yet. Will you help me write it?</p>
-          <iframe
-            width="560"
-            height="315"
-            src="https://www.youtube.com/embed/6IJB0aD8gSA"
-            frameBorder="0"
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-            allowFullscreen
-          />
-          <p>Too doo doo doo doo doo doo doo</p>
-        </main>
-      </Layout>
-    )
-  }
+import Layout from '../components/Layout'
+import SEO from '../components/SEO'
+import { formatMessage } from '../utils/i18n'
+
+function NotFoundPage({ data, location }) {
+  const siteTitle = data.site.siteMetadata.title
+
+  return (
+    <Layout location={location} title={siteTitle}>
+      <SEO title={formatMessage('t404Title')} />
+      <h1>{formatMessage('t404Title')}</h1>
+      <p>{formatMessage('t404Content')}</p>
+    </Layout>
+  )
+}
+
+NotFoundPage.propTypes = {
+  data: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
 }
 
 export default NotFoundPage
+
+export const pageQuery = graphql`
+  query {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+  }
+`

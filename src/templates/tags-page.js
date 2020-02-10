@@ -29,7 +29,7 @@ const TagPageTemplate = ({ pageContext, data, location }) => {
       ]}
     >
       <SEO title={tagHeader} description={tagHeader} />
-      <h1>{tagHeader}</h1>
+      <h3>{tagHeader}</h3>
       <main>
         {edges.map(({ node }) => {
           const title = node.frontmatter.title || node.fields.slug

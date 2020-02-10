@@ -7,7 +7,9 @@ module.exports = {
 	taIndKeywords: [`blog`, `gatsby`, `javascript`, `react`],
 	tfIndCountPosts: count => `${count} Posts`,
 	tfTagHeader: (totalCount, tag) =>
-		`${totalCount} post${totalCount === 1 ? '' : 's'} tagged with "${tag}"`,
+		`Kết quả tìm kiếm: ${totalCount} post${
+			totalCount === 1 ? '' : 's'
+		} với tag là "${tag}"`,
 	t404Title: 'Not Found',
-	t404Content: 'You just hit a route that doesn&#39;t exist... the sadness.',
+	t404Content: 'You just hit a route that does not exist... the sadness.',
 }

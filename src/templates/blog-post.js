@@ -14,6 +14,9 @@ import {
   createLanguageLink,
   replaceAnchorLinksByLanguage,
 } from '../utils/i18n'
+import { useLang } from '../context/LanguageContext'
+
+import TagList from '../components/TagList'
 
 const GITHUB_USERNAME = 'gaearon'
 const GITHUB_REPO_NAME = 'overreacted.io'
@@ -89,80 +92,80 @@ class Translations extends React.Component {
   }
 }
 
-class BlogPostTemplate extends React.Component {
-  render() {
-    const post = this.props.data.markdownRemark
-    const siteTitle = get(this.props, 'data.site.siteMetadata.title')
-    let {
-      previous,
-      next,
-      slug,
-      translations,
-      translatedLinks,
-    } = this.props.pageContext
-    const lang = 'vi'
-    // Replace original links with translated when available.
-    let html = post.html
+const BlogPostTemplate = ({ data, pageContext, location }) => {
+  const post = data.markdownRemark
+  const tags = post.frontmatter.tags
+  const siteTitle = data.site.siteMetadata.title
+  let { previous, next, slug, translations, translatedLinks } = pageContext
+  const { lang, homeLink } = useLang()
+  // Replace original links with translated when available.
+  let html = post.html
 
-    // Replace original anchor links by lang when available in whitelist
-    // see utils/whitelist.js
-    html = replaceAnchorLinksByLanguage(html, lang)
+  // Replace original anchor links by lang when available in whitelist
+  // see utils/whitelist.js
+  html = replaceAnchorLinksByLanguage(html, lang)
 
-    translatedLinks.forEach(link => {
-      // jeez
-      function escapeRegExp(str) {
-        return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-      }
-      let translatedLink = '/' + lang + link
-      html = html.replace(
-        new RegExp('"' + escapeRegExp(link) + '"', 'g'),
-        '"' + translatedLink + '"'
-      )
-    })
+  translatedLinks.forEach(link => {
+    // jeez
+    function escapeRegExp(str) {
+      return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    }
+    let translatedLink = '/' + lang + link
+    html = html.replace(
+      new RegExp('"' + escapeRegExp(link) + '"', 'g'),
+      '"' + translatedLink + '"'
+    )
+  })
 
-    translations = translations.slice()
-    translations.sort((a, b) => {
-      return codeToLanguage(a) < codeToLanguage(b) ? -1 : 1
-    })
+  translations = translations.slice()
+  translations.sort((a, b) => {
+    return codeToLanguage(a) < codeToLanguage(b) ? -1 : 1
+  })
 
-    // loadFontsForCode(lang)
-    // TODO: this curried function is annoying
-    const languageLink = createLanguageLink(slug, lang)
-    const enSlug = languageLink('en')
-    const editUrl = `https://github.com/${GITHUB_USERNAME}/${GITHUB_REPO_NAME}/edit/master/src/pages/${enSlug.slice(
-      1,
-      enSlug.length - 1
-    )}/index${lang === 'en' ? '' : '.' + lang}.md`
-    const discussUrl = `https://mobile.twitter.com/search?q=${encodeURIComponent(
-      `https://nvdai2401.github.io/${enSlug}`
-    )}`
+  // loadFontsForCode(lang)
+  // TODO: this curried function is annoying
+  const languageLink = createLanguageLink(slug, lang)
+  const enSlug = languageLink('en')
+  const editUrl = `https://github.com/${GITHUB_USERNAME}/${GITHUB_REPO_NAME}/edit/master/src/pages/${enSlug.slice(
+    1,
+    enSlug.length - 1
+  )}/index${lang === 'en' ? '' : '.' + lang}.md`
+  const discussUrl = `https://mobile.twitter.com/search?q=${encodeURIComponent(
+    `https://nvdai2401.github.io/${enSlug}`
+  )}`
 
-    return (
-      <Layout location={this.props.location} title={siteTitle}>
-        <SEO
-          lang={lang}
-          title={post.frontmatter.title}
-          description={post.frontmatter.spoiler}
-          slug={post.fields.slug}
-        />
-        <main>
-          <article>
-            <header>
-              <h1 style={{ color: 'var(--textTitle)' }}>
-                {post.frontmatter.title}
-              </h1>
-              <p
-                style={{
-                  ...scale(-1 / 5),
-                  display: 'block',
-                  marginBottom: rhythm(1),
-                  marginTop: rhythm(-4 / 5),
-                }}
-              >
-                {formatPostDate(post.frontmatter.date, lang)}
-                {` • ${formatReadingTime(post.timeToRead)}`}
-              </p>
-              {/* {translations.length > 0 && (
+  let tagsPart
+  if (tags.length) {
+    tagsPart = <TagList tags={tags} baseUrl={`${homeLink}tags`} />
+  }
+
+  return (
+    <Layout location={location} title={siteTitle}>
+      <SEO
+        lang={lang}
+        title={post.frontmatter.title}
+        description={post.frontmatter.spoiler}
+        slug={post.fields.slug}
+      />
+      <main>
+        <article>
+          <header style={{ marginBottom: rhythm(2) }}>
+            <h1 style={{ color: 'var(--textTitle)' }}>
+              {post.frontmatter.title}
+            </h1>
+            <p
+              style={{
+                ...scale(-1 / 5),
+                display: 'block',
+                marginBottom: rhythm(1 / 5),
+                marginTop: rhythm(-4 / 5),
+              }}
+            >
+              {formatPostDate(post.frontmatter.date, lang)}
+              {` • ${formatReadingTime(post.timeToRead)}`}
+            </p>
+            {tagsPart}
+            {/* {translations.length > 0 && (
                 <Translations
                   translations={translations}
                   editUrl={editUrl}
@@ -170,23 +173,23 @@ class BlogPostTemplate extends React.Component {
                   lang={lang}
                 />
               )} */}
-            </header>
-            <div dangerouslySetInnerHTML={{ __html: html }} />
-            <footer>
-              <p>
-                {/* <a href={discussUrl} target="_blank" rel="noopener noreferrer">
+          </header>
+          <div dangerouslySetInnerHTML={{ __html: html }} />
+          <footer>
+            <p>
+              {/* <a href={discussUrl} target="_blank" rel="noopener noreferrer">
                   Thảo luận trên Facebook
                 </a> */}
-                {/* {` • `}
+              {/* {` • `}
                 <a href={editUrl} target="_blank" rel="noopener noreferrer">
                   Edit on GitHub
                 </a> */}
-              </p>
-            </footer>
-          </article>
-        </main>
-        <aside>
-          {/* <div
+            </p>
+          </footer>
+        </article>
+      </main>
+      <aside>
+        {/* <div
             style={{
               margin: '90px 0 40px 0',
               fontFamily: systemFont,
@@ -194,57 +197,56 @@ class BlogPostTemplate extends React.Component {
           >
             <Signup cta={post.frontmatter.cta} />
           </div> */}
-          <h3
+        <h3
+          style={{
+            marginTop: rhythm(0.25),
+          }}
+        >
+          <Link
             style={{
-              marginTop: rhythm(0.25),
+              boxShadow: 'none',
+              textDecoration: 'none',
+              color: 'var(--textTitle)',
+            }}
+            to={'/'}
+          >
+            FIREman
+          </Link>
+        </h3>
+        <Bio />
+        <nav>
+          <ul
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'space-between',
+              listStyle: 'none',
+              padding: 0,
             }}
           >
-            <Link
-              style={{
-                boxShadow: 'none',
-                textDecoration: 'none',
-                color: 'var(--textTitle)',
-              }}
-              to={'/'}
-            >
-              FIREman
-            </Link>
-          </h3>
-          <Bio />
-          <nav>
-            <ul
-              style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                justifyContent: 'space-between',
-                listStyle: 'none',
-                padding: 0,
-              }}
-            >
-              <li>
-                {previous && (
-                  <Link
-                    to={previous.fields.slug}
-                    rel="prev"
-                    style={{ marginRight: 20 }}
-                  >
-                    ← {previous.frontmatter.title}
-                  </Link>
-                )}
-              </li>
-              <li>
-                {next && (
-                  <Link to={next.fields.slug} rel="next">
-                    {next.frontmatter.title} →
-                  </Link>
-                )}
-              </li>
-            </ul>
-          </nav>
-        </aside>
-      </Layout>
-    )
-  }
+            <li>
+              {previous && (
+                <Link
+                  to={previous.fields.slug}
+                  rel="prev"
+                  style={{ marginRight: 20 }}
+                >
+                  ← {previous.frontmatter.title}
+                </Link>
+              )}
+            </li>
+            <li>
+              {next && (
+                <Link to={next.fields.slug} rel="next">
+                  {next.frontmatter.title} →
+                </Link>
+              )}
+            </li>
+          </ul>
+        </nav>
+      </aside>
+    </Layout>
+  )
 }
 
 export default BlogPostTemplate
